@@ -14,8 +14,8 @@ def calcShannonEnt(dataSet):
         labelCounts[currentLabel] += 1
     shannonEnt = 0.0
     for key in labelCounts:
-        prob = float(labelCounts[key])/numEntries
-        shannonEnt -= prob*log(prob, 2)
+        prob = float(labelCounts[key]) / numEntries
+        shannonEnt -= prob * log(prob, 2)
     return shannonEnt
 
 
@@ -31,13 +31,13 @@ def splitDataSet(dataSet, axis, value):
     for featVec in dataSet:
         if featVec[axis] == value:
             reducedFeatVec = featVec[:axis]
-            reducedFeatVec.extend(featVec[axis+1:])
+            reducedFeatVec.extend(featVec[axis + 1:])
             retDataSet.append(reducedFeatVec)
     return retDataSet
 
 
 def chooseBestFeatureToSplit(dataSet):
-    numFeatures = len(dataSet[0])-1
+    numFeatures = len(dataSet[0]) - 1
     baseEntropy = calcShannonEnt(dataSet)
     bestInfoGain = 0.0
     bestFeature = -1
@@ -47,9 +47,9 @@ def chooseBestFeatureToSplit(dataSet):
         newEntropy = 0.0
         for value in uniqueVals:
             subDataSet = splitDataSet(dataSet, i, value)
-            prob = len(subDataSet)/float(len(dataSet))
-            newEntropy += prob*calcShannonEnt(subDataSet)
-        infoGain = baseEntropy-newEntropy
+            prob = len(subDataSet) / float(len(dataSet))
+            newEntropy += prob * calcShannonEnt(subDataSet)
+        infoGain = baseEntropy - newEntropy
         if(infoGain > bestInfoGain):
             bestInfoGain = infoGain
             bestFeature = i
@@ -63,7 +63,7 @@ def majorityCnt(classList):
             classCount[vote] = 0
         classCount[vote] += 1
     sortedClassCount = sorted(
-        classCount.items(), key=operator.itemgetter(1), reverse=true)
+        classCount.items(), key=operator.itemgetter(1), reverse=True)
     return sortedClassCount[0][0]
 
 
